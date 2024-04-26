@@ -7,8 +7,7 @@ const getVoices = () => {
     const voices = window.speechSynthesis.getVoices();
     return voices;
   } else {
-    console.log("Error");
-    return ["Error"];
+    return [];
   }
 };
 
@@ -57,10 +56,7 @@ const getVoices = () => {
     }
   });
   next.addEventListener("click", () => {
-    console.log("Increased");
-    console.log(i);
     if (i < content.childNodes.length - 1) {
-      //content.childNodes[i].classList.remove("highlight");
       ++i;
     } else {
       synth.pause();
@@ -71,17 +67,13 @@ const getVoices = () => {
   prev.addEventListener("click", () => {
     if (i > 0) {
       i--;
-      // if (content.childNodes[i]) {
-      //   console.log("decreased");
-      //   content.childNodes[i].classList.remove("highlight");
-      // }
     }
   });
 
   scrapBtn.addEventListener("click", async () => {
     let url = document.getElementById("url").value;
     let body = JSON.stringify({ url: url });
-    const response = await fetch(`${window.location.href}:3000/scrap`, {
+    const response = await fetch(`${window.location.origin}:3000/scrap`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -120,13 +112,11 @@ function displaySpeed() {
 }
 
 async function speak(textNodes, voice, speed) {
-  console.log(textNodes, voice, speed);
   for (i; i < textNodes.length; i++) {
     let content = textNodes[i];
     if (!content.classList.contains("highlight")) {
       content.classList.add("highlight");
     }
-    console.log(content);
     let utterance = new SpeechSynthesisUtterance(content.textContent);
     utterance.rate = speed;
     utterance.lang = "en-US";
