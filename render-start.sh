@@ -1,24 +1,31 @@
 #!/bin/bash
 
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-
 INSTALL_DIR="/opt/google/chrome"
 
-STORAGE_DIR=/opt/render/project/.render
+# Ensure the installation directory exists
+mkdir -p $INSTALL_DIR
 
-if [[ ! -d $STORAGE_DIR/chrome ]]; then
-echo "...Downloading Chrome"
-mkdir -p $STORAGE_DIR/chrome
-cd $STORAGE_DIR/chrome
-wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-dpkg -x ./google-chrome-stable_current_amd64.deb $STORAGE_DIR/chrome
-rm ./google-chrome-stable_current_amd64.deb
-cd $HOME/project/src # Make sure we return to where we were
+# Download Google Chrome
+echo "Downloading Google Chrome..."
+wget -q --show-progress -O /tmp/google-chrome.deb $CHROME_URL
+
+# Install Google Chrome (assuming dpkg doesn't require sudo)
+echo "Installing Google Chrome..."
+dpkg -i /tmp/google-chrome.deb
+
+# Verify installation and set Chrome to PATH
+if [ -x "$(command -v google-chrome)" ]; then
+    echo "Google Chrome installed successfully!"
+    echo "Adding Chrome to PATH..."
+    echo "export PATH=\$PATH:$INSTALL_DIR" >> $HOME/.bashrc
+    source $HOME/.bashrc
+    echo "Chrome added to PATH."
 else
-echo "...Using Chrome from cache"
+    echo "Failed to install Google Chrome."
 fi
 
-# be sure to add Chromes location to the PATH as part of your Start Command
-# export PATH="${PATH}:/opt/render/project/.render/chrome/opt/google/chrome/"
-# echo $STORAGE_DIR
-# echo $PATH
+# Clean up downloaded package
+rm /tmp/google-chrome.deb
+
+echo "Installation completed."
