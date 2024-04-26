@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      window.speechSynthesis;
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>scrap-speech</title>
+    <style>
+      #content::-webkit-scrollbar {
+        display: none;
+      }
+      #content {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow-y: auto;
+      }
+      .highlight {
+        background-color: aquamarine;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="h-screen w-screen bg-[#393939]">
+      <div
+        class="flex h-[12vh] w-full justify-start p-2 border border-[#515151]"
+      >
+        <div class="w-[40%] flex flex-col gap-2 overflow-hidden">
+          <select id="selection" class="h-full w-full rounded-md"></select>
+          <div class="flex items-center justify-center">
+            <input type="text" class="w-full rounded-md p-1" id="url" /><button
+              id="scrap"
+              class="text-white ml-2 rounded-md h-full w-12 text-center bg-[#0075ff]"
+            >
+              GO
+            </button>
+          </div>
+        </div>
+        <div class="h-full ml-20 w-fit flex pt-2">
+          <div class="object-contain h-full">
+            <svg
+              id="prev"
+              viewBox="0 0 24 24"
+              height="75%"
+              width="75%"
+              fill="none"
+              class=""
+              xmlns="http://www.w3.org/2000/svg"
+              stroke=""
+              transform="matrix(-1, 0, 0, 1, 0, 0)"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-#ffffffidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M10.2929 1.29289C10.6834 0.902369 11.3166 0.902369 11.7071 1.29289L14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5C15 5.26522 14.8946 5.51957 14.7071 5.70711L11.7071 8.70711C11.3166 9.09763 10.6834 9.09763 10.2929 8.70711C9.90237 8.31658 9.90237 7.68342 10.2929 7.29289L11.573 6.01281C7.90584 6.23349 5 9.2774 5 13C5 16.866 8.13401 20 12 20C15.866 20 19 16.866 19 13C19 12.4477 19.4477 12 20 12C20.5523 12 21 12.4477 21 13C21 17.9706 16.9706 22 12 22C7.02944 22 3 17.9706 3 13C3 8.16524 6.81226 4.22089 11.5947 4.00896L10.2929 2.70711C9.90237 2.31658 9.90237 1.68342 10.2929 1.29289Z"
+                  fill="#ffffff"
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <div class="object-contain h-full">
+            <svg
+              id="pause"
+              fill="#ffffff"
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="75%"
+              height="75%"
+              viewBox="-47.81 -47.81 573.75 573.75"
+              xml:space="preserve"
+              stroke="#ffffff"
+              stroke-width="0.00478125"
+              class="hidden"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke="#CCCCCC"
+                stroke-width="2.86875"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g>
+                  <g>
+                    <g>
+                      <path
+                        d="M201.654,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v184.9c0,10.558,8.645,19.125,19.125,19.125h31.9 c10.557,0,19.125-8.645,19.125-19.125v-184.9C220.779,136.094,212.211,127.525,201.654,127.525z"
+                      ></path>
+                      <path
+                        d="M308.448,127.525h-31.9c-10.558,0-19.125,8.645-19.125,19.125v184.9c0,10.558,8.645,19.125,19.125,19.125h31.9 c10.557,0,19.125-8.645,19.125-19.125v-184.9C327.573,136.094,318.929,127.525,308.448,127.525z"
+                      ></path>
+                      <path
+                        d="M239.062,0C107.023,0,0,107.023,0,239.062s107.023,239.062,239.062,239.062s239.062-107.023,239.062-239.062 S371.102,0,239.062,0z M239.292,409.811c-94.171,0-170.519-76.424-170.519-170.519S145.197,68.773,239.292,68.773 c94.095,0,170.519,76.424,170.519,170.519S333.54,409.811,239.292,409.811z"
+                      ></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="object-contain h-full">
+            <svg
+              height="75%"
+              width="75%"
+              id="resume"
+              viewBox="0 0 16 16"
+              class=""
+              xmlns="http://www.w3.org/2000/svg"
+              fill="white"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="m 2 2.5 v 11 c 0 1.5 1.269531 1.492188 1.269531 1.492188 h 0.128907 c 0.246093 0.003906 0.488281 -0.050782 0.699218 -0.171876 l 9.796875 -5.597656 c 0.433594 -0.242187 0.65625 -0.734375 0.65625 -1.226562 c 0 -0.492188 -0.222656 -0.984375 -0.65625 -1.222656 l -9.796875 -5.597657 c -0.210937 -0.121093 -0.453125 -0.175781 -0.699218 -0.175781 h -0.128907 s -1.269531 0 -1.269531 1.5 z m 0 0"
+                  fill=""
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <div class="object-contain h-full">
+            <svg
+              viewBox="0 0 24 24"
+              height="75%"
+              width="75%"
+              id="next"
+              fill="none"
+              class=""
+              xmlns="http://www.w3.org/2000/svg"
+              stroke=""
+            >
+              <g id="SVGRepo_bgCarrier" stroke-#ffffffidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M10.2929 1.29289C10.6834 0.902369 11.3166 0.902369 11.7071 1.29289L14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5C15 5.26522 14.8946 5.51957 14.7071 5.70711L11.7071 8.70711C11.3166 9.09763 10.6834 9.09763 10.2929 8.70711C9.90237 8.31658 9.90237 7.68342 10.2929 7.29289L11.573 6.01281C7.90584 6.23349 5 9.2774 5 13C5 16.866 8.13401 20 12 20C15.866 20 19 16.866 19 13C19 12.4477 19.4477 12 20 12C20.5523 12 21 12.4477 21 13C21 17.9706 16.9706 22 12 22C7.02944 22 3 17.9706 3 13C3 8.16524 6.81226 4.22089 11.5947 4.00896L10.2929 2.70711C9.90237 2.31658 9.90237 1.68342 10.2929 1.29289Z"
+                  fill="#ffffff"
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <div class="pt-2 pl-4">
+            <label for="pbrate" class="text-white">Speed</label>
+            <input
+              type="range"
+              id="pbrate"
+              min="1"
+              max="4"
+              value="1"
+              step=".25"
+            />
+            <span id="speed" class="text-white">1</span>
+          </div>
+        </div>
+      </div>
+      <div class="h-[85vh] p-4">
+        <div
+          class="h-full w-full shadow-xl rounded-2xl p-2 text-white decoration-none overflow-hidden"
+          id="content"
+          contenteditable="true"
+        >
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
