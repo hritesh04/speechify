@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-INSTALL_DIR="/opt/google"
+INSTALL_DIR=".render/google"
 
 # Ensure the installation directory exists
 mkdir -p $INSTALL_DIR/chrome
