@@ -9,17 +9,17 @@ mkdir -p "$INSTALL_DIR/chrome"
 if [[ -d "$INSTALL_DIR/chrome" ]]; then
     echo "Downloading Google Chrome..."
 
-    cd "$INSTALL_DIR/chrome"
+    #cd "$INSTALL_DIR/chrome"
     wget -P ./ "$CHROME_URL"
 
     echo "Installing Google Chrome..."
-    dpkg -x ./google-chrome-stable_current_amd64.deb "$INSTALL_DIR/chrome"
+    dpkg -x ./google-chrome-stable_current_amd64.deb
 
     rm ./google-chrome-stable_current_amd64.deb
-    cd "$HOME"
+    #cd "$HOME"
     echo "Google Chrome installed successfully!"
     echo "Adding Chrome to PATH..."
-    echo "export PATH=\$PATH:$INSTALL_DIR/chrome" >> "$HOME/.bashrc"
+    echo "export PATH=\$PATH:/" >> "$HOME/.bashrc"
     source "$HOME/.bashrc"
     echo "Chrome added to PATH."
 else
