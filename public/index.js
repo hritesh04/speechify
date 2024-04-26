@@ -73,13 +73,16 @@ const getVoices = () => {
   scrapBtn.addEventListener("click", async () => {
     let url = document.getElementById("url").value;
     let body = JSON.stringify({ url: url });
-    const response = await fetch(`${window.location.origin}:3000/scrap`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body,
-    });
+    const response = await fetch(
+      `https://${window.location.hostname}:3000/scrap`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      }
+    );
     const responseData = await response.json();
 
     populateContent(responseData);
