@@ -8,7 +8,7 @@ echo "Downloading Google Chrome..."
 wget -q --show-progress -O /tmp/google-chrome.deb $CHROME_URL
 
 echo "Installing Google Chrome..."
-sudo dpkg -i /tmp/google-chrome.deb
+dpkg -i /tmp/google-chrome.deb
 
 if [ -x "$(command -v google-chrome)" ]; then
     echo "Google Chrome installed successfully!"
