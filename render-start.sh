@@ -1,34 +1,23 @@
-#!/bin/bash
 
-CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
 
-CHROME_DEB="google-chrome-stable_current_amd64.deb"
+STORAGE_DIR=/opt/render/project/.render
 
-# Create a temporary directory
-TMP_DIR=$(mktemp -d)
+if [[ ! -d $STORAGE_DIR/chrome ]]; then
+  echo "...Downloading Chrome"
+  mkdir -p $STORAGE_DIR/chrome
+  cd $STORAGE_DIR/chrome
+  wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  dpkg -x ./google-chrome-stable_current_amd64.deb $STORAGE_DIR/chrome
+  rm ./google-chrome-stable_current_amd64.deb
+  cd $HOME/project/src # Make sure we return to where we were
+else
+  echo "...Using Chrome from cache"
+fi
 
-# Download Google Chrome
-echo "Downloading Google Chrome..."
-curl -o "${TMP_DIR}/${CHROME_DEB}" "${CHROME_URL}"
+# be sure to add Chromes location to the PATH as part of your Start Command
+# export PATH="${PATH}:/opt/render/project/.render/chrome/opt/google/chrome"
 
-# Extract the .deb package
-echo "Extracting Google Chrome package..."
-DEB_DIR="${TMP_DIR}/chrome"
-mkdir -p "${DEB_DIR}"
-dpkg-deb -x "${TMP_DIR}/${CHROME_DEB}" "${DEB_DIR}"
-
-# Move the extracted files to the desired location
-INSTALL_DIR="/home/render/chrome"
-mkdir -p "${INSTALL_DIR}"
-mv "${DEB_DIR}/opt/google/chrome" "${INSTALL_DIR}"
-
-# Add Google Chrome to PATH
-echo "Adding Google Chrome to PATH..."
-CHROME_BIN="${INSTALL_DIR}/chrome/chrome"
-echo "export PATH=\$PATH:${INSTALL_DIR}/chrome" >> ~/.bashrc
-source ~/.bashrc
-
-# Clean up
-rm -rf "${TMP_DIR}"
-
-echo "Google Chrome has been installed and added to PATH."
+# add your own build commands...
